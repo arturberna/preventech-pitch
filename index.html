@@ -1,0 +1,923 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simbora — Pitch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chela+One&family=Fraunces:opsz,wght,SOFT@9..144,500..900,50..100&family=Work+Sans:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+/* ───────────── Tokens ───────────── */
+:root{
+  --paper:#f4e6c8; --paper-2:#ead5ab; --paper-3:#fbf3e1;
+  --ink:#2a1c10; --ink-soft:#5d4733; --ink-faint:#8a7257;
+  --azul:#24479a; --azul-2:#3d66c4; --verde:#3b7d3c; --laranja:#e2702a;
+  --amarelo:#efa51f; --roxo:#6b4a94; --vermelho:#c3412e;
+  --bg:#1e0f06;
+  --f-display:"Fraunces", Georgia, serif;
+  --f-title:"Chela One", "Fraunces", cursive;
+  --f-body:"Work Sans", system-ui, sans-serif;
+  --f-hand:"Caveat", cursive;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;color:var(--ink);font-family:var(--f-body)}
+body{position:relative}
+
+/* ───────────── Stage 1920×1080 escalado ───────────── */
+#deck{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:center center;overflow:hidden;border-radius:6px;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+.slide{position:absolute;inset:0;visibility:hidden;overflow:hidden;
+  background:
+    radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(120,80,30,.22) 100%),
+    var(--paper);
+}
+.slide::before{ /* grão de papel */
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .32 0 0 0 0 .18 0 0 0 .35 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.slide.dark{background:radial-gradient(ellipse at 50% 40%, #3a2412 0%, #1e0f06 75%);color:var(--paper)}
+.slide.dark::before{opacity:.25;mix-blend-mode:screen}
+.pad{position:absolute;inset:110px 130px 120px}
+
+/* ───────────── Tipografia ───────────── */
+h1,h2,h3,h4{font-family:var(--f-title)!important;font-weight:400!important;font-variation-settings:normal!important;line-height:1.04;letter-spacing:.005em}
+h1{font-size:118px;font-weight:800}
+h2{font-size:84px;font-weight:750}
+h3{font-size:40px;font-weight:700}
+.lead{font-size:36px;line-height:1.35;color:var(--ink-soft);max-width:1100px}
+.dark .lead{color:#e9d6b2}
+.hand{font-family:var(--f-hand);font-weight:700}
+.em-azul{color:var(--azul)} .em-verde{color:var(--verde)} .em-laranja{color:var(--laranja)} .em-roxo{color:var(--roxo)} .em-amarelo{color:var(--amarelo)}
+.underline{background:linear-gradient(transparent 68%, rgba(239,165,31,.55) 68%);padding:0 .08em}
+
+/* Carimbo (xilogravura) para o "capítulo" de cada slide */
+.stamp{position:absolute;top:56px;left:130px;display:inline-flex;align-items:center;gap:14px;
+  font:700 22px/1 var(--f-body);letter-spacing:.18em;text-transform:uppercase;color:var(--vermelho);
+  padding:12px 20px;border:3px solid currentColor;outline:2px solid currentColor;outline-offset:4px;
+  mix-blend-mode:multiply;opacity:.92}
+.dark .stamp{color:var(--amarelo);mix-blend-mode:normal}
+.stamp b{font-family:var(--f-display);font-size:28px;letter-spacing:0}
+
+/* Ornamentos */
+.tile{position:absolute;width:150px;height:150px;opacity:.9}
+.tile.tr{top:-20px;right:-20px} .tile.bl{bottom:-20px;left:-20px}
+.wood-rule{height:14px;background:
+  repeating-linear-gradient(135deg,var(--ink) 0 6px,transparent 6px 14px);opacity:.75;
+  -webkit-mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+
+/* Cartões */
+.card{background:var(--paper-3);border:2px solid var(--ink);border-radius:18px;padding:30px 34px;
+  box-shadow:6px 6px 0 var(--ink)}
+.card .bi{font-size:44px}
+.chip{display:inline-flex;align-items:center;gap:10px;padding:8px 18px;border-radius:999px;border:2px solid var(--ink);background:var(--paper-3);font-weight:600;font-size:22px}
+
+/* Dado pendente */
+.pend{display:inline-block;border:3px dashed var(--vermelho);color:var(--vermelho);border-radius:12px;padding:0 .2em;background:rgba(195,65,46,.07)}
+.todo{font:600 18px/1.2 var(--f-body);color:var(--vermelho);letter-spacing:.04em}
+.todo::before{content:"▲ ";}
+
+/* Placeholder de imagem gerada */
+.ph{position:absolute;border-radius:22px;overflow:hidden;background-size:cover;background-position:center}
+.ph.empty{border:3px dashed var(--ink-faint);background:
+  repeating-linear-gradient(45deg,rgba(138,114,87,.08) 0 18px,transparent 18px 36px),var(--paper-3);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--ink-faint);text-align:center;padding:24px}
+.ph.empty .bi{font-size:64px}
+.ph.empty b{font:700 26px var(--f-body);color:var(--ink-soft)}
+.ph.empty span{font-size:18px;max-width:380px}
+
+/* Sprites dos personagens do jogo (sheet 6×6, frame 98×124) */
+.sprite{--s:1.6;width:calc(98px*var(--s));height:calc(124px*var(--s));background-size:600% 600%;background-repeat:no-repeat;image-rendering:pixelated;background-position:0 0}
+.sprite.walk-side{background-position-y:100%;animation:walk .6s steps(6) infinite}
+.sprite.walk-front{background-position-y:60%;animation:walk .6s steps(6) infinite}
+@keyframes walk{from{background-position-x:0%}to{background-position-x:120%}}
+
+/* HUD do deck */
+#hud{position:fixed;left:0;right:0;bottom:0;height:5px;background:rgba(255,255,255,.08);z-index:20}
+#bar{height:100%;width:0;background:linear-gradient(90deg,var(--verde),var(--azul),var(--amarelo),var(--laranja),var(--roxo))}
+#count{position:fixed;right:18px;bottom:14px;color:#c9b38e;font:600 14px var(--f-body);letter-spacing:.1em;z-index:20;opacity:.7}
+#help{position:fixed;left:18px;bottom:14px;color:#c9b38e;font:500 13px var(--f-body);z-index:20;opacity:.55}
+#notes{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);width:min(1100px,92vw);max-height:38vh;overflow:auto;
+  background:rgba(20,10,4,.94);color:#f4e6c8;border:1px solid #6b4f33;border-radius:14px;padding:20px 26px;font:400 19px/1.5 var(--f-body);z-index:30;display:none}
+#notes.on{display:block}
+#notes h4{font:700 13px var(--f-body);letter-spacing:.18em;text-transform:uppercase;color:var(--amarelo);margin-bottom:8px}
+.notes{display:none}
+
+/* ───────────── Slide-specific ───────────── */
+/* 0 Abertura PrevenTechMA */
+#s-intro .brand{position:absolute;left:50%;top:400px;width:1100px;margin-left:-550px;mix-blend-mode:multiply}
+#s-intro .apresenta{position:absolute;left:0;right:0;top:680px;text-align:center;font:400 64px var(--f-title);color:var(--ink-soft);letter-spacing:.12em}
+/* 1 Capa */
+#s-capa .bg{position:absolute;inset:0;background:url(assets/game/bootScreen1.webp) center/cover}
+#s-capa .bg{transform-origin:50% 48%}
+#s-capa .overlay{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 42%, rgba(24,12,5,.9) 0%, rgba(18,9,4,.96) 70%);opacity:0}
+#s-capa .logo{position:absolute;left:498px;top:274px;width:976px;opacity:0;filter:drop-shadow(0 10px 30px rgba(0,0,0,.45))}
+#s-capa .tag{position:absolute;left:0;right:0;top:520px;text-align:center}
+#s-capa .tag p{font:400 72px/1.12 var(--f-title);color:#79c868;opacity:0}
+#s-capa .tag .hl{color:#f3913f;display:inline-block}
+#s-capa .tag small{display:block;margin-top:90px;font:600 26px var(--f-body);color:#5a86d8;letter-spacing:.06em;opacity:0}
+#s-capa .centelha{position:absolute;top:60px;left:50%;display:flex;align-items:center;gap:12px;
+  background:rgba(251,243,225,.88);border:2px solid var(--verde);color:var(--verde);border-radius:999px;padding:10px 24px;font:600 20px var(--f-body)}
+
+/* 2 Gancho */
+#s-gancho .crowd{position:absolute;left:0;right:0;top:470px;display:flex;justify-content:center;gap:70px}
+.person{position:relative;display:flex;flex-direction:column;align-items:center}
+.person .sprite{--s:2.4}
+.person .shadow{width:120px;height:18px;border-radius:50%;background:rgba(60,35,10,.25);margin-top:-14px}
+.person .name{margin-top:12px;font:600 24px var(--f-body);color:var(--ink-soft)}
+.person .q{position:absolute;top:-70px;font:800 84px var(--f-display);color:var(--roxo);opacity:0}
+.person .tested{position:absolute;top:-56px;opacity:0;color:var(--verde);background:var(--paper-3);border:2px solid var(--verde);border-radius:999px;padding:4px 14px;font:600 18px var(--f-body);white-space:nowrap}
+#s-gancho .lens{position:absolute;top:470px;left:200px;font-size:150px;color:var(--ink);opacity:0;pointer-events:none}
+#s-gancho .reveal{position:absolute;left:0;right:0;bottom:90px;text-align:center}
+
+/* 3 Problema */
+.bars{display:flex;flex-direction:column;gap:34px;margin-top:40px;width:900px}
+.barrow{display:grid;grid-template-columns:200px 1fr;align-items:center;gap:24px}
+.barrow .lbl{font:700 30px var(--f-body)}
+.track{height:84px;border-radius:14px;background:rgba(42,28,16,.07);position:relative;overflow:hidden;border:2px solid rgba(42,28,16,.15)}
+.fill{position:absolute;inset:0 auto 0 0;width:0;border-radius:12px;display:flex;align-items:center;justify-content:flex-end;padding-right:20px;font:800 46px var(--f-display);color:#fff}
+.fill.ma{background:var(--laranja)} .fill.br{background:var(--azul)}
+.fill.unknown{background:repeating-linear-gradient(45deg,rgba(195,65,46,.18) 0 14px,transparent 14px 28px);border:3px dashed var(--vermelho);color:var(--vermelho)}
+.src{position:absolute;left:130px;bottom:50px;font-size:17px;color:var(--ink-faint);max-width:1500px}
+
+/* 4 Por que não basta */
+.gap-rows{display:flex;flex-direction:column;gap:26px;margin-top:56px;width:1100px}
+.gap-row{display:grid;grid-template-columns:420px 110px 1fr;align-items:center}
+.gap-row .have{font:500 32px var(--f-body);color:var(--ink-soft);display:flex;gap:16px;align-items:center}
+.gap-row .have .bi{font-size:38px;color:var(--ink-faint)}
+.gap-row svg{width:100px;height:40px}
+.gap-row .miss{font:700 34px var(--f-body);color:var(--ink);display:flex;gap:16px;align-items:center}
+.gap-row .miss .bi{font-size:40px;color:var(--laranja)}
+.gap-head{display:grid;grid-template-columns:420px 110px 1fr;font:700 18px var(--f-body);letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint)}
+
+/* 5 Virada */
+#s-virada .mapwrap{position:absolute;right:-40px;top:60px;width:1000px;height:1000px;border-radius:40px;overflow:hidden;border:4px solid var(--ink);box-shadow:12px 12px 0 var(--ink)}
+#s-virada .zoom{position:absolute;inset:0}
+#s-virada .mapwrap img{width:100%;height:100%;object-fit:cover}
+#s-virada .walker{position:absolute}
+#s-virada .walker .sprite{--s:.42}
+#s-virada .txt{position:absolute;left:130px;top:220px;width:760px}
+
+/* 6 Loop */
+#s-loop .wheel{position:absolute;left:880px;top:80px;width:860px;height:860px}
+#s-loop .wheel svg{position:absolute;inset:0;overflow:visible}
+.node{position:absolute;width:300px;text-align:center;margin-top:-66px} /* âncora = centro do disco */
+.node .label{background:var(--paper-3);border:2px solid var(--ink);border-radius:14px;padding:12px 16px 14px;box-shadow:4px 4px 0 var(--ink)}
+.node .disc{width:132px;height:132px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;border:4px solid var(--ink);background:var(--paper-3);box-shadow:5px 5px 0 var(--ink)}
+.node .disc .bi{font-size:58px}
+.node h4{font:800 32px var(--f-display);font-variation-settings:"SOFT" 100}
+.node p{font-size:20px;line-height:1.28;color:var(--ink-soft);margin-top:4px}
+#s-loop .core{position:absolute;left:50%;top:50%;width:250px;text-align:center}
+#s-loop .core .bi{font-size:64px;color:var(--vermelho)}
+#s-loop .core b{display:block;font:800 36px var(--f-display);margin-top:4px}
+#s-loop .core span{font-size:19px;color:var(--ink-soft)}
+#s-loop .orbit{position:absolute;inset:0}
+#s-loop .orbit i{position:absolute;left:50%;top:130px;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:var(--amarelo);border:3px solid var(--ink)}
+
+/* 7 Gameplay */
+#s-play .screen{position:absolute;right:110px;top:150px;width:1240px;height:698px;border-radius:22px;overflow:hidden;border:6px solid var(--ink);background:#000;box-shadow:14px 14px 0 rgba(0,0,0,.45)}
+#s-play video,#s-play .screen img{width:100%;height:100%;object-fit:cover;display:block}
+#s-play .callouts{position:absolute;left:110px;top:200px;width:500px;display:flex;flex-direction:column;gap:46px}
+.callout{position:relative;font:700 44px/1.05 var(--f-hand);color:var(--amarelo)}
+.callout small{display:block;font:400 21px/1.35 var(--f-body);color:#e9d6b2;margin-top:8px}
+.callout .bi{font-size:30px;margin-right:6px;color:var(--paper)}
+#s-play .live{position:absolute;right:130px;top:105px;display:flex;align-items:center;gap:10px;font:600 18px var(--f-body);letter-spacing:.15em;color:#e9d6b2}
+#s-play .live i{width:12px;height:12px;border-radius:50%;background:var(--vermelho)}
+
+/* 8 Mecânica = aula */
+.lesson{display:grid;grid-template-columns:1fr 120px 1fr;align-items:center;gap:0;margin-bottom:22px}
+.lesson .a,.lesson .b{display:flex;gap:22px;align-items:center;padding:22px 28px;border-radius:18px;min-height:128px}
+.lesson .a{background:var(--paper-3);border:2px solid var(--ink);box-shadow:5px 5px 0 var(--ink)}
+.lesson .b{background:var(--azul);color:#fff;border:2px solid var(--ink);box-shadow:5px 5px 0 var(--ink)}
+.lesson .bi{font-size:46px;flex:none}
+.lesson p{font-size:27px;line-height:1.28}
+.lesson .b p b{color:var(--amarelo)}
+.lesson svg{width:110px;height:40px}
+.lesson-head{display:grid;grid-template-columns:1fr 120px 1fr;font:700 18px var(--f-body);letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);margin:40px 0 14px}
+
+/* 9 Segurança */
+#s-seg .shield{position:absolute;left:150px;top:300px;width:420px;height:420px;display:grid;place-items:center}
+#s-seg .shield .bi{font-size:260px;color:var(--verde);position:relative;z-index:2}
+#s-seg .ring{position:absolute;inset:60px;border-radius:50%;border:4px solid var(--verde);opacity:0}
+#s-seg .grid{position:absolute;left:690px;top:250px;width:1100px;display:grid;grid-template-columns:1fr 1fr;gap:26px}
+#s-seg .card{padding:24px 28px}
+#s-seg .card h3{font-size:30px;display:flex;gap:14px;align-items:center;margin-bottom:10px}
+#s-seg .card p{font-size:21px;line-height:1.35;color:var(--ink-soft)}
+#s-seg .card.wide{grid-column:span 2}
+
+/* 10 Onde estamos */
+.timeline{position:absolute;left:150px;right:150px;top:520px;height:300px}
+.timeline .rail{position:absolute;left:0;right:0;top:60px;height:8px;border-radius:4px;background:rgba(42,28,16,.12)}
+.timeline .prog{position:absolute;left:0;top:60px;height:8px;border-radius:4px;background:var(--verde);width:0}
+.tnode{position:absolute;top:0;width:260px;text-align:center}
+.tnode .dot{width:128px;height:128px;margin:0 auto;border-radius:50%;display:grid;place-items:center;border:4px solid var(--ink);background:var(--paper-3);font-size:52px}
+.tnode.done .dot{background:var(--verde);color:#fff}
+.tnode h4{font:800 28px var(--f-display);margin-top:18px}
+.tnode p{font-size:19px;color:var(--ink-soft);margin-top:4px}
+.here{position:absolute;top:-92px;left:50%;transform:translateX(-50%);font:700 34px var(--f-hand);color:var(--vermelho);white-space:nowrap}
+#s-estamos .badge{position:absolute;right:150px;top:150px;width:300px;height:300px;border-radius:50%;border:5px double var(--verde);color:var(--verde);display:grid;place-items:center;text-align:center;font:800 30px/1.15 var(--f-display);mix-blend-mode:multiply}
+#s-estamos .badge .bi{font-size:56px;display:block}
+
+/* 11 Validação */
+#s-valid .hyps{position:absolute;left:130px;right:130px;top:330px;display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.hyp{display:flex;flex-direction:column;gap:14px}
+.hyp .n{font:800 22px var(--f-body);letter-spacing:.2em;color:var(--laranja)}
+.hyp h3{font-size:34px}
+.hyp .how{font-size:20px;color:var(--ink-soft);line-height:1.35;flex:1}
+.hyp .meta{border-top:2px dashed var(--ink-faint);padding-top:12px;font:700 22px var(--f-body)}
+#s-valid .foot{position:absolute;left:130px;right:130px;bottom:70px;display:flex;gap:18px;flex-wrap:wrap}
+
+/* 12 Mercado */
+#s-merc .rings{position:absolute;right:160px;top:140px;width:820px;height:820px}
+.mring{position:absolute;left:50%;bottom:0;border-radius:50%;border:3px solid var(--ink);display:flex;justify-content:center;padding-top:34px}
+.mring b{font:800 24px var(--f-body);letter-spacing:.18em}
+.mring.tam{width:820px;height:820px;background:rgba(36,71,154,.13)}
+.mring.sam{width:540px;height:540px;background:rgba(59,125,60,.22)}
+.mring.som{width:270px;height:270px;background:rgba(226,112,42,.35)}
+#s-merc .rows{position:absolute;left:130px;top:330px;width:820px;display:flex;flex-direction:column;gap:30px}
+.mrow{display:grid;grid-template-columns:110px 1fr;gap:20px;align-items:start}
+.mrow .k{font:800 28px var(--f-body);letter-spacing:.12em;padding-top:8px}
+.mrow .v{font:800 56px var(--f-display);line-height:1}
+.mrow .d{font-size:21px;color:var(--ink-soft);margin-top:6px}
+
+/* 13 Modelo */
+#s-modelo .flow{position:absolute;left:130px;right:130px;top:360px;display:flex;justify-content:space-between;align-items:flex-start}
+.fstep{width:300px;text-align:center}
+.fstep .disc{width:150px;height:150px;margin:0 auto 18px;border-radius:32px;display:grid;place-items:center;border:4px solid var(--ink);background:var(--paper-3);box-shadow:6px 6px 0 var(--ink)}
+.fstep .disc .bi{font-size:70px}
+.fstep h4{font:800 32px var(--f-display)}
+.fstep p{font-size:21px;color:var(--ink-soft);margin-top:6px;line-height:1.3}
+#s-modelo .wire{position:absolute;left:280px;right:280px;top:432px;height:6px}
+#s-modelo .wire .pk{position:absolute;top:-9px;width:24px;height:24px;border-radius:50%;background:var(--amarelo);border:3px solid var(--ink)}
+#s-modelo .bottom{position:absolute;left:130px;right:130px;bottom:90px;display:grid;grid-template-columns:1fr 1fr;gap:28px}
+
+/* 14 Equipe */
+#s-equipe .team{position:absolute;left:130px;right:130px;top:330px;display:grid;grid-template-columns:repeat(4,1fr);gap:34px}
+.member{text-align:center}
+.member .photo{width:250px;height:250px;margin:0 auto 22px;border-radius:50%;border:4px dashed var(--ink-faint);display:grid;place-items:center;font-size:90px;color:var(--ink-faint);background:var(--paper-3);overflow:hidden;background-size:cover;background-position:center}
+.member .photo.has{border:5px solid var(--ink);font-size:0}
+.member h4{font:800 32px var(--f-display)}
+.member .role{font:700 20px var(--f-body);letter-spacing:.14em;text-transform:uppercase;margin-top:8px}
+.member p{font-size:20px;color:var(--ink-soft);margin-top:8px}
+
+/* 15 Pedido */
+#s-pedido .ask{position:absolute;left:130px;top:250px;width:980px}
+#s-pedido .ask ul{list-style:none;margin-top:40px;display:flex;flex-direction:column;gap:24px}
+#s-pedido .ask li{display:flex;gap:20px;align-items:flex-start;font-size:32px;line-height:1.3}
+#s-pedido .ask li .bi{font-size:40px;color:var(--amarelo);margin-top:-2px}
+#s-pedido .close{position:absolute;left:0;right:0;bottom:70px;text-align:center}
+#s-pedido .close p{font:400 68px var(--f-title)}
+#s-pedido .contact{position:absolute;right:130px;top:250px;width:520px}
+#s-pedido .contact .card{background:var(--paper-3);color:var(--ink)}
+#s-pedido .contact li{list-style:none;display:flex;gap:14px;align-items:center;font-size:24px;margin:12px 0}
+#s-pedido .qr{width:200px;height:200px;margin:20px auto 0;border:3px dashed var(--ink-faint);border-radius:16px;display:grid;place-items:center;font-size:110px;color:var(--ink-faint)}
+#s-pedido .crowd2{position:absolute;left:0;right:0;bottom:200px;display:flex;justify-content:center;gap:40px;opacity:.95}
+#s-pedido .crowd2 .sprite{--s:1.25}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Azulejo em xilogravura -->
+    <symbol id="azulejo" viewBox="0 0 100 100">
+      <rect x="2" y="2" width="96" height="96" fill="#fbf3e1" stroke="#24479a" stroke-width="4"/>
+      <path d="M50 8 C58 30 70 42 92 50 C70 58 58 70 50 92 C42 70 30 58 8 50 C30 42 42 30 50 8Z" fill="#24479a"/>
+      <circle cx="50" cy="50" r="9" fill="#fbf3e1" stroke="#24479a" stroke-width="3"/>
+      <circle cx="50" cy="50" r="3" fill="#efa51f"/>
+      <path d="M2 2 L18 2 L2 18Z M98 2 L82 2 L98 18Z M2 98 L18 98 L2 82Z M98 98 L82 98 L98 82Z" fill="#24479a"/>
+    </symbol>
+    <symbol id="seta" viewBox="0 0 100 40">
+      <path class="draw" d="M4 22 C30 8 60 34 88 18" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+      <path class="draw" d="M76 8 L90 18 L78 30" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div id="deck">
+
+<!-- ═════════ 0 · ABERTURA ═════════ -->
+<section class="slide" id="s-intro">
+  <svg class="tile tr" data-a="pop"><use href="#azulejo"/></svg>
+  <svg class="tile bl" data-a="pop"><use href="#azulejo"/></svg>
+  <img class="brand" src="assets/gen/logo-preventech.png" alt="PrevenTechMA">
+  <div class="apresenta">Apresenta</div>
+  <div class="notes">Abertura. Deixe a logo respirar um instante e avance.</div>
+</section>
+
+<!-- ═════════ 1 · CAPA ═════════ -->
+<section class="slide" id="s-capa">
+  <div class="bg"></div>
+  <div class="overlay"></div>
+  <img class="logo" src="assets/game/logo.webp" alt="SIMBORA">
+  <div class="tag">
+    <p>Ninguém sabe quem está <span class="hl">infectado</span> olhando.<br>Nem no jogo, <span class="hl">nem na vida</span>.</p>
+    <small>Jogo de prevenção de ISTs e gravidez na adolescência para o ensino médio · PrevenTechMA</small>
+  </div>
+  <div class="notes">Abrir com calma, sem pressa. "Muitas ISTs não dão sintoma. Você não descobre olhando para a pessoa, só testando. A gente transformou essa ideia num jogo."</div>
+</section>
+
+<!-- ═════════ 2 · GANCHO ═════════ -->
+<section class="slide" id="s-gancho" data-steps="3">
+  <svg class="tile tr" data-a="pop"><use href="#azulejo"/></svg>
+  <svg class="tile bl" data-a="pop"><use href="#azulejo"/></svg>
+  <div class="pad" style="text-align:center">
+    <h2 data-a="split">Olhe para essas seis pessoas.</h2>
+    <p class="lead" style="margin:22px auto 0" data-step="1" data-a="up">Quem delas tem uma <b>IST</b>?</p>
+  </div>
+  <i class="bi bi-search lens"></i>
+  <div class="crowd">
+    <div class="person" data-a="person"><i class="q">?</i><div class="sprite" data-sheet="mulher1"></div><div class="shadow"></div><div class="name">Júlia</div></div>
+    <div class="person" data-a="person"><i class="q">?</i><div class="sprite" data-sheet="homem1"></div><div class="shadow"></div><div class="name">Carlos</div></div>
+    <div class="person" data-a="person"><i class="q">?</i><div class="sprite" data-sheet="personagem2"></div><div class="shadow"></div><div class="name">Marcos</div></div>
+    <div class="person" data-a="person"><i class="q">?</i><div class="sprite" data-sheet="mulher2"></div><div class="shadow"></div><div class="name">Ana</div></div>
+    <div class="person" data-a="person"><i class="q">?</i><div class="sprite" data-sheet="personagem1"></div><div class="shadow"></div><div class="name">Pedro</div></div>
+    <div class="person" data-a="person"><i class="q">?</i><div class="sprite" data-sheet="mulher3"></div><div class="shadow"></div><div class="name">Lúcia</div></div>
+  </div>
+  <div class="reveal">
+    <h3 data-step="2" data-a="stamp" style="font-size:64px;color:var(--roxo)">Não dá para saber olhando.</h3>
+    <p class="lead" style="margin:16px auto 0;font-size:34px" data-step="3" data-a="up">Muitas ISTs não dão sintoma. <b class="underline">Só a testagem revela.</b> No Simbora, é igual.</p>
+  </div>
+  <div class="notes">Interativo: pergunte para a banca. Deixe 2 segundos de silêncio. (→) mostra os "?" → (→) a frase-chave. "Ninguém aqui acertou, porque não tem como acertar. E é exatamente isso que o jogo ensina."</div>
+</section>
+
+<!-- ═════════ 3 · PROBLEMA ═════════ -->
+<section class="slide" id="s-problema">
+  <div class="stamp" data-a="stamp"><b>01</b> O problema</div>
+  <div class="pad" style="top:170px;right:800px">
+    <h2 data-a="split" style="font-size:76px">Os jovens do Maranhão estão <span class="em-laranja">mais expostos</span> e menos preparados.</h2>
+    <p class="lead" data-a="up" style="margin-top:26px;font-size:28px">Nascidos vivos de mães com até 19 anos</p>
+    <div class="bars">
+      <div class="barrow" data-a="up"><span class="lbl">Maranhão</span><div class="track"><div class="fill ma" data-bar="gravidezMA"></div></div></div>
+      <div class="barrow" data-a="up"><span class="lbl">Brasil</span><div class="track"><div class="fill br" data-bar="gravidezBR"></div></div></div>
+    </div>
+    <div style="margin-top:46px;display:flex;gap:30px;align-items:center" data-a="up">
+      <i class="bi bi-droplet-half" style="font-size:64px;color:var(--vermelho)"></i>
+      <div>
+        <div style="font:800 64px var(--f-display);line-height:1"><span data-dado="sifilisMA"></span></div>
+        <div style="font-size:24px;color:var(--ink-soft);margin-top:6px" data-dado-label="sifilisMA"></div>
+      </div>
+    </div>
+  </div>
+  <figure class="ph" data-img="assets/gen/img-01-jovens.webp" data-id="IMG-01" data-desc="Jovens maranhenses em aquarela" style="right:110px;top:180px;width:620px;height:760px" data-a="right"></figure>
+  <p class="src" data-a="fade" data-d="1.4" data-fontes></p>
+  <div class="notes">"No Maranhão, [X]% dos bebês nascem de mães adolescentes, contra [Y]% no Brasil. A sífilis segue crescendo entre jovens. E boa parte dessas infecções não dá sintoma nenhum." Preencha os DADOS no topo do script.</div>
+</section>
+
+<!-- ═════════ 4 · POR QUE NÃO BASTA ═════════ -->
+<section class="slide" id="s-gap">
+  <div class="stamp" data-a="stamp"><b>02</b> O que já existe</div>
+  <div class="pad" style="top:180px">
+    <h2 data-a="split">Informação existe.<br><span class="em-azul">Prática de decisão, não.</span></h2>
+    <div class="gap-rows">
+      <div class="gap-head" data-a="fade"><span>O que existe</span><span></span><span>O que falta</span></div>
+      <div class="gap-row" data-a="row"><span class="have"><i class="bi bi-megaphone"></i>Palestra pontual / PSE</span><svg class="em-laranja"><use href="#seta"/></svg><span class="miss"><i class="bi bi-arrow-repeat"></i>Continuidade e prática</span></div>
+      <div class="gap-row" data-a="row"><span class="have"><i class="bi bi-file-earmark-text"></i>Cartilha, vídeo</span><svg class="em-laranja"><use href="#seta"/></svg><span class="miss"><i class="bi bi-signpost-split"></i>Decidir, errar e ver a consequência</span></div>
+      <div class="gap-row" data-a="row"><span class="have"><i class="bi bi-person-video3"></i>Professor sem material</span><svg class="em-laranja"><use href="#seta"/></svg><span class="miss"><i class="bi bi-easel2"></i>Aula pronta, sem constrangimento</span></div>
+    </div>
+  </div>
+  <figure class="ph" data-img="assets/gen/img-02-palestra.webp" data-id="IMG-02" data-desc="Palestra no auditório, alunos dispersos" style="right:110px;top:300px;width:520px;height:560px" data-rot="-2" data-a="right"></figure>
+  <div class="notes">"Ninguém aqui está partindo do zero: tem PSE, tem cartilha, tem palestra. Mas tudo isso é passivo. O jovem ouve e não pratica a decisão. E o professor fica sem material para um tema que constrange a turma." Se tiver relato de educador, cite aqui.</div>
+</section>
+
+<!-- ═════════ 5 · VIRADA ═════════ -->
+<section class="slide" id="s-virada">
+  <div class="mapwrap" data-a="map" data-rot="2"><div class="zoom">
+    <img src="assets/game/mapa_cidade2.jpg" alt="">
+    <div class="walker" style="left:-60px;top:245px" data-walk="1"><div class="sprite walk-side" data-sheet="mulher1"></div></div>
+    <div class="walker" style="left:-60px;top:780px" data-walk="2"><div class="sprite walk-side" data-sheet="homem1"></div></div>
+    <div class="walker" style="left:-60px;top:245px" data-walk="3"><div class="sprite walk-side" data-sheet="mulher3"></div></div>
+  </div></div>
+  <div class="stamp" data-a="stamp"><b>03</b> A solução</div>
+  <div class="txt">
+    <h2 data-a="split">E se o aluno fosse o <span class="em-verde">agente de saúde</span> da comunidade?</h2>
+    <p class="lead" data-a="up" data-d=".6" style="margin-top:34px">No Simbora, o aluno cuida de um bairro vivo. Cada pessoa tem rotina, parceria e objetivo, e um kit de prevenção que vai acabando.</p>
+    <p class="hand em-laranja" data-a="up" data-d="1.1" style="font-size:46px;margin-top:30px">Quando o kit acaba, é hora de agir.</p>
+  </div>
+  <div class="notes">"O aluno observa um bairro vivo. Cada personagem tem uma vida, um parceiro, um objetivo. Quando o kit de prevenção de alguém está acabando, é hora de agir: aconselhar um teste ou montar um kit novo com ele."</div>
+</section>
+
+<!-- ═════════ 6 · LOOP ═════════ -->
+<section class="slide" id="s-loop">
+  <div class="stamp" data-a="stamp"><b>04</b> Como funciona</div>
+  <div class="pad" style="top:200px;width:700px">
+    <h2 data-a="split">Não é quiz.<br>É <span class="em-roxo">gestão de uma comunidade</span>.</h2>
+    <p class="lead" data-a="up" data-d=".5" style="margin-top:30px;font-size:30px">Como na vida real, conselho dado com pressa ou para a pessoa errada é rejeitado, e a confiança cai.</p>
+  </div>
+  <div class="wheel">
+    <svg viewBox="0 0 860 860"><circle class="draw" cx="430" cy="430" r="300" fill="none" stroke="#2a1c10" stroke-width="5" stroke-linecap="round"/></svg>
+    <div class="orbit"><i></i></div>
+    <div class="core" data-a="pop" data-d=".4"><i class="bi bi-heart-pulse-fill"></i><b>Confiança</b><span>a reputação do aluno na comunidade</span></div>
+    <div class="node" style="left:430px;top:130px" data-a="node"><div class="disc"><i class="bi bi-eye em-azul"></i></div><div class="label"><h4>Observar</h4><p>A mochila mostra o <b>preparo</b>, nunca a saúde.</p></div></div>
+    <div class="node" style="left:730px;top:430px" data-a="node"><div class="disc"><i class="bi bi-chat-heart em-roxo"></i></div><div class="label"><h4>Abordar</h4><p>Aceitam o conselho conforme a confiança conquistada.</p></div></div>
+    <div class="node" style="left:430px;top:730px" data-a="node"><div class="disc"><i class="bi bi-bag-plus em-verde"></i></div><div class="label"><h4>Agir</h4><p>Montar o kit no posto ou levar para testar.</p></div></div>
+    <div class="node" style="left:130px;top:430px" data-a="node"><div class="disc"><i class="bi bi-arrow-repeat em-laranja"></i></div><div class="label"><h4>Consequência</h4><p>A confiança sobe ou cai. O mapa segue vivo.</p></div></div>
+  </div>
+  <div class="notes">"Não é um quiz. O aluno gerencia uma comunidade inteira. E, como na vida real, conselho dado com pressa ou para a pessoa errada é rejeitado."</div>
+</section>
+
+<!-- ═════════ 7 · GAMEPLAY ═════════ -->
+<section class="slide dark" id="s-play">
+  <div class="stamp" data-a="stamp"><b>05</b> Jogo rodando</div>
+  <div class="live" data-a="fade" data-d=".8"><i></i> PROTÓTIPO REAL · FASE 1</div>
+  <div class="screen" data-a="screen">
+    <video muted loop playsinline preload="auto" src="assets/gameplay.webm" poster="assets/shots/map-gameplay.png"></video>
+  </div>
+  <div class="callouts">
+    <div class="callout" data-a="left" data-d="1.4"><i class="bi bi-geo-alt-fill"></i>Um bairro vivo<small>Cada pessoa circula com rotina própria: casa, escola, praça, feira.</small></div>
+    <div class="callout" data-a="left" data-d="2.6"><i class="bi bi-person-vcard"></i>A ficha dá o contexto<small>Parceria, objetivo, quando testou e quão resistente a pessoa é a conselhos.</small></div>
+    <div class="callout" data-a="left" data-d="3.8"><i class="bi bi-signpost-split"></i>Testar ou montar o kit<small>O aluno escolhe a conduta. A infecção segue invisível até o teste.</small></div>
+  </div>
+  <div class="notes">Deixe o vídeo falar por alguns segundos antes de comentar. "Isso aqui já está rodando. Cada pessoa circula sozinha e gasta o kit nos lugares por onde passa."</div>
+</section>
+
+<!-- ═════════ 8 · MECÂNICA = AULA ═════════ -->
+<section class="slide" id="s-aula" data-steps="4">
+  <div class="stamp" data-a="stamp"><b>06</b> O diferencial</div>
+  <div class="pad" style="top:160px">
+    <h2 data-a="split">A mecânica <span class="underline">é</span> a aula.</h2>
+    <div class="lesson-head" data-a="fade"><span>No jogo</span><span></span><span>O aluno aprende</span></div>
+    <div class="lesson" data-step="1" data-a="row"><div class="a"><i class="bi bi-incognito em-roxo"></i><p>O estado de saúde é <b>oculto</b>; só o teste revela.</p></div><svg class="em-laranja"><use href="#seta"/></svg><div class="b"><i class="bi bi-eye-slash"></i><p>Não dá para saber olhando. <b>Muitas ISTs são assintomáticas.</b></p></div></div>
+    <div class="lesson" data-step="2" data-a="row"><div class="a"><i class="bi bi-hourglass-split em-azul"></i><p>Testar cedo demais dá resultado <b>não confiável</b>.</p></div><svg class="em-laranja"><use href="#seta"/></svg><div class="b"><i class="bi bi-calendar2-week"></i><p><b>Janela imunológica</b>, um conceito que quase nenhum jovem conhece.</p></div></div>
+    <div class="lesson" data-step="3" data-a="row"><div class="a"><i class="bi bi-clipboard2-pulse em-verde"></i><p>O médico aponta <b>o que faltou</b> no kit, sem nota de "% de segurança".</p></div><svg class="em-laranja"><use href="#seta"/></svg><div class="b"><i class="bi bi-layers"></i><p>Proteção total não existe: <b>prevenção combinada</b> e dupla proteção.</p></div></div>
+    <div class="lesson" data-step="4" data-a="row"><div class="a"><i class="bi bi-hospital em-vermelho" style="color:var(--vermelho)"></i><p>Quem adoece é <b>tratado e volta</b> ao bairro.</p></div><svg class="em-laranja"><use href="#seta"/></svg><div class="b"><i class="bi bi-heart"></i><p>IST tem tratamento. <b>O SUS funciona.</b> Adoecer não é vergonha.</p></div></div>
+  </div>
+  <div class="notes">Slide mais importante. Revele uma linha por vez (→). "Aqui está o que nenhuma cartilha consegue fazer. O jogo nunca mostra quem está infectado. A única forma de saber é testar, e testar no momento errado dá resultado falso. O aluno não decora isso, ele vive isso."</div>
+</section>
+
+<!-- ═════════ 9 · SEGURANÇA ═════════ -->
+<section class="slide" id="s-seg">
+  <div class="stamp" data-a="stamp"><b>07</b> Segurança</div>
+  <div class="pad" style="top:150px"><h2 data-a="split">Feito para menores de idade e para a sala de aula.</h2></div>
+  <div class="shield" data-a="pop"><span class="ring"></span><span class="ring"></span><span class="ring"></span><i class="bi bi-shield-check"></i></div>
+  <div class="grid">
+    <div class="card" data-a="up"><h3><i class="bi bi-robot em-azul"></i>IA com trava</h3><p>Responde só a partir de base curada: Ministério da Saúde, SUS, OMS/OPAS. Fora da base: "procure a UBS".</p></div>
+    <div class="card" data-a="up"><h3><i class="bi bi-life-preserver em-vermelho" style="color:var(--vermelho)"></i>Acolhimento</h3><p>Relatos de violência ou sofrimento recebem acolhimento e canais reais de ajuda.</p></div>
+    <div class="card" data-a="up"><h3><i class="bi bi-person-heart em-roxo"></i>Sem estigma</h3><p>Nenhum personagem é marcado como "doente". Resultado positivo vem com cuidado e tratamento.</p></div>
+    <div class="card" data-a="up"><h3><i class="bi bi-lock em-verde"></i>LGPD</h3><p>Interesses só em dados agregados e anônimos. Consentimento via escola e responsáveis.</p></div>
+    <div class="card wide" data-a="up"><h3><i class="bi bi-mortarboard em-laranja"></i>Currículo e revisão</h3><p>Alinhado à BNCC <span class="pend" data-dado="bncc"></span> e ao Programa Saúde na Escola. Conteúdo revisado por <span class="pend" data-dado="revisor"></span>.</p></div>
+  </div>
+  <div class="notes">"Sabemos que IA conversando com adolescente sobre sexualidade assusta. Por isso ela é travada: só responde o que está na base oficial e, quando não sabe, manda para a UBS."</div>
+</section>
+
+<!-- ═════════ 10 · ONDE ESTAMOS ═════════ -->
+<section class="slide" id="s-estamos">
+  <div class="stamp" data-a="stamp"><b>08</b> Onde estamos</div>
+  <div class="pad" style="top:170px"><h2 data-a="split" style="width:1200px">O núcleo do jogo<br><span class="em-verde">já está rodando.</span></h2></div>
+  <div class="badge" data-rot="-8" data-a="stamp" data-d=".6"><div><i class="bi bi-award"></i>Centelha III<br><small style="font:600 20px var(--f-body)">FAPEMA · aprovado</small></div></div>
+  <div class="timeline">
+    <div class="rail"></div><div class="prog"></div>
+    <div class="tnode done" style="left:0%;margin-left:130px" data-a="node"><span class="here">você está aqui ↓</span><div class="dot"><i class="bi bi-check-lg"></i></div><h4>Mapa vivo</h4><p>NPCs circulando e consumindo o kit</p></div>
+    <div class="tnode" style="left:30%" data-a="node"><div class="dot"><i class="bi bi-chat-heart"></i></div><h4>Confiança</h4><p data-dado="dataFase2"></p></div>
+    <div class="tnode" style="left:52%" data-a="node"><div class="dot"><i class="bi bi-puzzle"></i></div><h4>Minigames</h4><p data-dado="dataFase3"></p></div>
+    <div class="tnode" style="left:74%" data-a="node"><div class="dot"><i class="bi bi-robot"></i></div><h4>Consultório IA</h4><p data-dado="dataFase4"></p></div>
+    <div class="tnode" style="left:100%;margin-left:-130px" data-a="node"><div class="dot"><i class="bi bi-flag"></i></div><h4>Piloto</h4><p data-dado="dataPiloto"></p></div>
+  </div>
+  <div class="notes">"Já temos o núcleo da simulação rodando — vocês viram no vídeo. Os próximos passos são os minigames que fazem o jogo ensinar e, em seguida, o piloto."</div>
+</section>
+
+<!-- ═════════ 11 · VALIDAÇÃO ═════════ -->
+<section class="slide" id="s-valid">
+  <div class="stamp" data-a="stamp"><b>09</b> Validação</div>
+  <div class="pad" style="top:160px"><h2 data-a="split">O que vamos provar no piloto.</h2></div>
+  <div class="hyps">
+    <div class="hyp card" data-a="up"><span class="n">H1</span><i class="bi bi-lightbulb em-amarelo"></i><h3>O aluno aprende</h3><p class="how">Pré/pós-teste em <b>janela imunológica</b>, ISTs assintomáticas e dupla proteção.</p><div class="meta">Ganho significativo <span class="pend" data-dado="criterioH1"></span></div></div>
+    <div class="hyp card" data-a="up"><span class="n">H2</span><i class="bi bi-stopwatch em-azul"></i><h3>Cabe numa aula</h3><p class="how">Missão concluída em 10–20 minutos.</p><div class="meta">≥ 80% das turmas</div></div>
+    <div class="hyp card" data-a="up"><span class="n">H3</span><i class="bi bi-easel2 em-verde"></i><h3>O professor adota</h3><p class="how">5 a 10 entrevistas semiestruturadas com educadores.</p><div class="meta">Intenção de uso declarada</div></div>
+    <div class="hyp card" data-a="up"><span class="n">H4</span><i class="bi bi-cash-coin em-laranja"></i><h3>Alguém paga</h3><p class="how">Conversa com Secretaria de Educação ou de Saúde.</p><div class="meta">1 carta de intenção</div></div>
+  </div>
+  <div class="foot" data-a="up" data-d="1">
+    <span class="chip"><i class="bi bi-building"></i> 3 escolas</span>
+    <span class="chip"><i class="bi bi-people"></i> 30–50 alunos</span>
+    <span class="chip"><i class="bi bi-file-earmark-check"></i> consentimento dos responsáveis + assentimento</span>
+    <span class="chip" style="border-style:dashed"><i class="bi bi-hourglass"></i> metas ainda não testadas</span>
+  </div>
+  <div class="notes">"Não vamos medir só se o aluno gostou. Vamos medir se ele entendeu a janela imunológica, que hoje quase ninguém sabe, e se uma secretaria pagaria por isso."</div>
+</section>
+
+<!-- ═════════ 12 · MERCADO ═════════ -->
+<section class="slide" id="s-merc">
+  <div class="stamp" data-a="stamp"><b>10</b> Mercado</div>
+  <div class="pad" style="top:160px"><h2 data-a="split">Mercado em reais,<br>focado no <span class="em-azul">ensino médio</span>.</h2></div>
+  <div class="rows">
+    <div class="mrow" data-a="up"><span class="k em-azul">TAM</span><div><div class="v" data-merc="tam"></div><div class="d">alunos de ensino médio no Brasil × preço</div></div></div>
+    <div class="mrow" data-a="up"><span class="k em-verde">SAM</span><div><div class="v" data-merc="sam"></div><div class="d">rede estadual do Maranhão × preço</div></div></div>
+    <div class="mrow" data-a="up"><span class="k em-laranja">SOM</span><div><div class="v" data-merc="som"></div><div class="d">fatia realista do SAM em 3–5 anos</div></div></div>
+    <p class="todo" data-a="fade" data-d="1.2" data-merc="nota"></p>
+  </div>
+  <div class="rings">
+    <div class="mring tam" data-a="ring"><b class="em-azul">TAM</b></div>
+    <div class="mring sam" data-a="ring"><b class="em-verde">SAM</b></div>
+    <div class="mring som" data-a="ring"><b class="em-laranja">SOM</b></div>
+  </div>
+  <div class="notes">"Nosso público é o ensino médio. Só a rede estadual do Maranhão tem [N] alunos. A R$ [P] por aluno/ano, isso já representa R$ [X]." Os valores são calculados a partir de DADOS no topo do script.</div>
+</section>
+
+<!-- ═════════ 13 · MODELO ═════════ -->
+<section class="slide" id="s-modelo">
+  <div class="stamp" data-a="stamp"><b>11</b> Modelo de negócio</div>
+  <div class="pad" style="top:160px"><h2 data-a="split">Quem já tem o dever de educar em saúde, paga.</h2></div>
+  <div class="wire"><svg width="100%" height="6" preserveAspectRatio="none" viewBox="0 0 100 6"><line class="draw" x1="0" y1="3" x2="100" y2="3" stroke="#2a1c10" stroke-width="3"/></svg><i class="pk"></i></div>
+  <div class="flow">
+    <div class="fstep" data-a="node"><div class="disc"><i class="bi bi-bank em-azul"></i></div><h4>Secretaria</h4><p>Educação ou Saúde (B2G). Escolas privadas (B2B) como entrada.</p></div>
+    <div class="fstep" data-a="node"><div class="disc"><i class="bi bi-cash-coin em-verde"></i></div><h4>Licença anual</h4><p>por aluno: <span class="pend" data-dado="precoTxt"></span></p></div>
+    <div class="fstep" data-a="node"><div class="disc"><i class="bi bi-easel2 em-laranja"></i></div><h4>Professores</h4><p>Formação e relatório pedagógico da turma (agregado).</p></div>
+    <div class="fstep" data-a="node"><div class="disc"><i class="bi bi-people-fill em-roxo"></i></div><h4>Alunos</h4><p>Jogam em sala, no navegador, no celular ou no PC.</p></div>
+  </div>
+  <div class="bottom">
+    <div class="card" data-a="up"><h3 style="font-size:28px;display:flex;gap:12px;align-items:center"><i class="bi bi-diagram-3 em-azul" style="font-size:34px"></i>Ciclo de venda B2G</h3><p style="font-size:21px;margin-top:8px;color:var(--ink-soft)"><span class="pend" data-dado="cicloVenda"></span></p></div>
+    <div class="card" data-a="up"><h3 style="font-size:28px;display:flex;gap:12px;align-items:center"><i class="bi bi-pie-chart em-laranja" style="font-size:34px"></i>Custos principais</h3><p style="font-size:21px;margin-top:8px;color:var(--ink-soft)">Desenvolvimento · curadoria de conteúdo de saúde · infraestrutura da IA</p></div>
+  </div>
+  <div class="notes">"Vendemos para quem já tem a obrigação de fazer educação em saúde nas escolas: as secretarias."</div>
+</section>
+
+<!-- ═════════ 14 · EQUIPE ═════════ -->
+<section class="slide" id="s-equipe">
+  <div class="stamp" data-a="stamp"><b>12</b> Equipe</div>
+  <div class="pad" style="top:160px"><h2 data-a="split">Quem faz o Simbora.</h2></div>
+  <div class="team" id="team"></div>
+  <div class="notes">Uma frase por pessoa sobre por que ela está no time. Use fotos reais da equipe (não geradas): salve em assets/team/ e preencha EQUIPE no script.</div>
+</section>
+
+<!-- ═════════ 15 · PEDIDO ═════════ -->
+<section class="slide dark" id="s-pedido">
+  <div class="stamp" data-a="stamp"><b>13</b> O pedido</div>
+  <div class="ask">
+    <h2 data-a="split" style="color:var(--paper)">Simbora com a gente?</h2>
+    <ul>
+      <li data-a="up"><i class="bi bi-building-check"></i><span><b>3 escolas de ensino médio</b> no Maranhão para o piloto em <span class="pend" data-dado="dataPiloto"></span></span></li>
+      <li data-a="up"><i class="bi bi-plus-circle"></i><span>Também buscamos: <span class="pend" data-dado="outrosPedidos"></span></span></li>
+    </ul>
+  </div>
+  <div class="contact" data-a="right">
+    <div class="card">
+      <h3 style="font-size:30px">Fale com a gente</h3>
+      <ul id="contato"></ul>
+      <div class="qr"><i class="bi bi-qr-code"></i></div>
+    </div>
+  </div>
+  <div class="crowd2" id="crowd2"></div>
+  <div class="close"><p data-a="split" data-d="1.2">Ninguém sabe olhando. <span class="em-amarelo">Mas todo mundo pode saber.</span></p></div>
+  <div class="notes">Feche voltando ao gancho: "Ninguém sabe quem está infectado olhando. A gente quer que cada jovem do Maranhão saiba disso antes de precisar saber. Simbora?"</div>
+</section>
+
+</div>
+
+<div id="hud"><div id="bar"></div></div>
+<div id="count"></div>
+<div id="help">← → navegar · N notas · F tela cheia</div>
+<div id="notes"><h4>Notas do apresentador</h4><div id="notes-body"></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════
+   DADOS — preencha aqui. null = aparece como pendente (tracejado vermelho).
+   Nada aqui foi inventado: só entram números com fonte confirmada.
+   ═══════════════════════════════════════════════════════════ */
+const DADOS = {
+  gravidezMA: null,          // % de nascidos vivos de mães ≤19 anos no MA  [VERIFICAR SINASC/IBGE]
+  gravidezBR: 11.8,          // % Brasil — IBGE, Estatísticas do Registro Civil 2023 (do deck original) [CONFERIR]
+  sifilisMA: null,           // ex.: taxa de detecção de sífilis adquirida no MA [VERIFICAR Boletim/SES-MA]
+  sifilisMALabel: "taxa de detecção de sífilis adquirida no Maranhão",
+  fontes: "Fontes: IBGE, Estatísticas do Registro Civil 2023 · [VERIFICAR] SINASC / Boletim Epidemiológico de Sífilis / SES-MA",
+
+  alunosEM_BR: null,         // matrículas no ensino médio, Brasil [VERIFICAR Censo Escolar INEP]
+  alunosEM_MA: null,         // matrículas no ensino médio, rede estadual MA [VERIFICAR]
+  preco: null,               // R$ por aluno/ano [PREENCHER]
+  somPct: null,              // % do SAM em 3–5 anos, ex.: 5 [PREENCHER]
+
+  bncc: "[habilidades]",
+  revisor: "[profissional de saúde]",
+  cicloVenda: "[edital · inexigibilidade · convênio PSE? — VERIFICAR]",
+  dataFase2: "[data]", dataFase3: "[data]", dataFase4: "[data]", dataPiloto: "[mês/ano]",
+  criterioH1: "[critério]",
+  outrosPedidos: "[contato com SEDUC/SES · revisor de saúde · recurso?]",
+};
+const EQUIPE = [ // foto: caminho em assets/team/ (fotos reais)
+  { nome:"[Nome]", papel:"Tecnologia", cor:"var(--azul)",    icone:"bi-code-slash",   linha:"[uma linha de credencial]", foto:null },
+  { nome:"[Nome]", papel:"Educação",   cor:"var(--verde)",   icone:"bi-mortarboard",  linha:"[experiência em sala de EM]", foto:null },
+  { nome:"[Nome]", papel:"Saúde",      cor:"var(--vermelho)",icone:"bi-heart-pulse",  linha:"[quem garante o conteúdo médico]", foto:null },
+  { nome:"[Nome]", papel:"Negócios",   cor:"var(--laranja)", icone:"bi-briefcase",    linha:"[uma linha de credencial]", foto:null },
+];
+const CONTATO = [
+  { icone:"bi-person", txt:"[Nome]" },
+  { icone:"bi-envelope", txt:"[e-mail]" },
+  { icone:"bi-whatsapp", txt:"[WhatsApp]" },
+];
+
+/* ═════════════ Preenchimento ═════════════ */
+const fmtPct = v => v.toLocaleString("pt-BR",{maximumFractionDigits:1}) + "%";
+const fmtBRL = v => v >= 1e9 ? "R$ " + (v/1e9).toLocaleString("pt-BR",{maximumFractionDigits:1}) + " bi"
+                 : v >= 1e6 ? "R$ " + (v/1e6).toLocaleString("pt-BR",{maximumFractionDigits:1}) + " mi"
+                 : "R$ " + v.toLocaleString("pt-BR");
+function pending(el, txt){ el.classList.add("pend"); el.textContent = txt; }
+
+document.querySelectorAll("[data-dado]").forEach(el=>{
+  const v = DADOS[el.dataset.dado];
+  if (v == null) return pending(el, "??");
+  if (typeof v === "string" && v.startsWith("[")) { el.classList.add("pend"); el.textContent = v; return; }
+  el.classList.remove("pend");
+  el.textContent = typeof v === "number" ? v.toLocaleString("pt-BR") : v;
+});
+DADOS.precoTxt = DADOS.preco ? "R$ " + DADOS.preco.toLocaleString("pt-BR") : null;
+document.querySelectorAll('[data-dado="precoTxt"]').forEach(el=>{ el.textContent = DADOS.precoTxt || "R$ [preço]"; el.classList.toggle("pend", !DADOS.precoTxt); });
+document.querySelectorAll("[data-dado-label]").forEach(el=> el.textContent = DADOS[el.dataset.dadoLabel + "Label"] || "");
+document.querySelectorAll("[data-fontes]").forEach(el=> el.textContent = DADOS.fontes);
+
+// Barras do problema (escala: maior valor = 100%)
+const barMax = Math.max(DADOS.gravidezMA||0, DADOS.gravidezBR||0) * 1.25 || 20;
+document.querySelectorAll("[data-bar]").forEach(el=>{
+  const v = DADOS[el.dataset.bar];
+  if (v == null){ el.classList.add("unknown"); el.dataset.w = 62; el.textContent = "?? %"; }
+  else { el.dataset.w = v / barMax * 100; el.dataset.val = v; el.textContent = fmtPct(v); }
+});
+
+// Mercado
+(function(){
+  const {alunosEM_BR:br, alunosEM_MA:ma, preco:p, somPct:s} = DADOS;
+  const set = (k, v, fallback) => { const el = document.querySelector(`[data-merc="${k}"]`); if (v) el.textContent = fmtBRL(v); else { el.innerHTML = `<span class="pend">${fallback}</span>`; } };
+  set("tam", br && p ? br*p : 0, "R$ ??");
+  set("sam", ma && p ? ma*p : 0, "R$ ??");
+  set("som", ma && p && s ? ma*p*s/100 : 0, "R$ ??");
+  const faltam = [!br&&"alunos EM Brasil", !ma&&"alunos EM rede MA", !p&&"preço", !s&&"% SOM"].filter(Boolean);
+  document.querySelector('[data-merc="nota"]').textContent = faltam.length ? "Preencher em DADOS: " + faltam.join(" · ") : "";
+})();
+
+// Equipe e contato
+document.getElementById("team").innerHTML = EQUIPE.map(m=>`
+  <div class="member" data-a="up">
+    <div class="photo ${m.foto?'has':''}" style="${m.foto?`background-image:url(${m.foto})`:''}"><i class="bi ${m.icone}"></i></div>
+    <h4 class="${m.nome.startsWith('[')?'pend':''}">${m.nome}</h4>
+    <div class="role" style="color:${m.cor}">${m.papel}</div>
+    <p>${m.linha}</p>
+  </div>`).join("");
+document.getElementById("contato").innerHTML = CONTATO.map(c=>`<li><i class="bi ${c.icone}"></i><span class="${c.txt.startsWith('[')?'pend':''}">${c.txt}</span></li>`).join("");
+document.getElementById("crowd2").innerHTML = ["mulher1","homem1","personagem2","mulher2","personagem1","mulher3"]
+  .map(k=>`<div class="sprite walk-front" data-sheet="${k}" style="animation-delay:${-Math.random()}s"></div>`).join("");
+
+// Sprites
+document.querySelectorAll("[data-sheet]").forEach(el=> el.style.backgroundImage = `url(assets/sheets/${el.dataset.sheet}.png)`);
+
+// Placeholders de imagem gerada: usa a imagem se existir, senão mostra o card
+document.querySelectorAll(".ph").forEach(ph=>{
+  const img = new Image();
+  img.onload = ()=>{ ph.style.backgroundImage = `url(${ph.dataset.img})`; };
+  img.onerror = ()=>{
+    ph.classList.add("empty");
+    ph.innerHTML = `<i class="bi bi-image"></i><b>${ph.dataset.id}</b><span>${ph.dataset.desc}<br>Prompt em <code>prompts-nano-banana.md</code><br>Salvar como <code>${ph.dataset.img}</code></span>`;
+  };
+  img.src = ph.dataset.img;
+});
+
+/* ═════════════ Motor do deck ═════════════ */
+gsap.registerPlugin(SplitText, DrawSVGPlugin);
+const deck = document.getElementById("deck");
+const slides = [...document.querySelectorAll(".slide")];
+let cur = -1, step = 0, busy = false, tl = null;
+
+function fit(){
+  const s = Math.min(innerWidth/1920, innerHeight/1080);
+  deck.style.transform = `translate(-50%,-50%) scale(${s})`;
+}
+addEventListener("resize", fit); fit();
+
+// Estados iniciais de cada tipo de animação
+const FROM = {
+  up:    {y:50, autoAlpha:0},
+  down:  {y:-40, autoAlpha:0},
+  left:  {x:-70, autoAlpha:0},
+  right: {x:90, autoAlpha:0},
+  fade:  {autoAlpha:0},
+  pop:   {scale:.4, autoAlpha:0},
+  node:  {scale:.3, autoAlpha:0},
+  ring:  {scale:0, autoAlpha:0},
+  row:   {x:-50, autoAlpha:0},
+  stamp: {scale:2.4, autoAlpha:0, rotation:-14},
+  person:{y:80, autoAlpha:0},
+  map:   {x:200, rotation:8, autoAlpha:0},
+  screen:{y:60, scale:.92, autoAlpha:0},
+  kenburns:{scale:1.12},
+};
+const EASE = { pop:"back.out(1.8)", node:"back.out(1.6)", ring:"elastic.out(1,.6)", stamp:"power4.in", person:"back.out(1.4)" };
+const DUR  = { stamp:.38, kenburns:9, ring:1.4 };
+
+function animIn(el, at, t){
+  const kind = el.dataset.a;
+  if (kind === "split"){
+    const sp = el._split || (el._split = SplitText.create(el, {type:"words,lines", mask:"lines"}));
+    gsap.set(el,{autoAlpha:1});
+    t.from(sp.words, {yPercent:110, duration:.8, stagger:.045, ease:"power4.out"}, at);
+    return;
+  }
+  const from = FROM[kind] || FROM.up;
+  const b = el._base || {rotation:0};
+  t.fromTo(el, {x:0, y:0, scale:1, rotation:b.rotation, ...from},
+    {x:0, y:0, scale:1, rotation:b.rotation, autoAlpha:1, duration:DUR[kind]||.75, ease:EASE[kind]||"power3.out"}, at);
+  if (kind === "stamp") t.fromTo(el.closest(".slide"), {x:0}, {x:6, duration:.05, repeat:3, yoyo:true, ease:"none"}, at + .38);
+  if (kind === "row") el.querySelectorAll(".draw").forEach(p => t.from(p, {drawSVG:0, duration:.5, ease:"power2.out"}, at + .3));
+}
+
+function enter(slide){
+  const t = gsap.timeline();
+  const els = [...slide.querySelectorAll("[data-a]")].filter(el => !el.closest("[data-step]") && !el.hasAttribute("data-step"));
+  // esconde tudo que tem animação (inclusive passos futuros)
+  slide.querySelectorAll("[data-a]").forEach(el => { if (el.dataset.a !== "kenburns") gsap.set(el,{autoAlpha:0}); });
+  let at = .35;
+  els.forEach(el => {
+    const d = el.dataset.d != null ? +el.dataset.d : at;
+    animIn(el, d, t);
+    if (el.dataset.d == null) at += el.dataset.a === "split" ? .35 : .14;
+  });
+  HOOKS[slide.id]?.enter?.(slide, t);
+  return t;
+}
+function runStep(slide, n){
+  const t = gsap.timeline();
+  slide.querySelectorAll(`[data-step="${n}"]`).forEach((el,i) => animIn(el, i*.12, t));
+  HOOKS[slide.id]?.step?.(slide, n, t);
+}
+
+function go(i, instant){
+  if (i < 0 || i >= slides.length || i === cur || busy) return;
+  const prev = slides[cur], next = slides[i];
+  if (prev) HOOKS[prev.id]?.leave?.(prev);
+  cur = i; step = 0; busy = true;
+  gsap.killTweensOf(next);
+  gsap.set(next, {visibility:"visible", zIndex:2, clipPath:"circle(0% at 50% 50%)"});
+  if (prev) gsap.set(prev, {zIndex:1});
+  gsap.to(next, {clipPath:"circle(75% at 50% 50%)", duration: instant ? 0 : 1.05, ease:"power3.inOut",
+    onComplete(){ if (prev) gsap.set(prev,{visibility:"hidden"}); gsap.set(next,{clearProps:"clipPath"}); busy = false; }});
+  if (prev) gsap.to(prev, {scale:.96, duration:1.05, ease:"power3.inOut", onComplete:()=>gsap.set(prev,{scale:1})});
+  enter(next).delay(instant ? 0 : .25);
+  updateHud();
+}
+function nextStep(){
+  const s = slides[cur], max = +(s.dataset.steps||0);
+  if (step < max){ step++; runStep(s, step); updateHud(); }
+  else go(cur+1);
+}
+function prevStep(){ go(cur-1); }
+function updateHud(){
+  document.getElementById("bar").style.width = ((cur+1)/slides.length*100) + "%";
+  document.getElementById("count").textContent = String(cur+1).padStart(2,"0") + " / " + String(slides.length).padStart(2,"0");
+  document.getElementById("notes-body").textContent = slides[cur].querySelector(".notes")?.textContent || "";
+  history.replaceState(null, "", "#" + (cur+1));
+}
+
+addEventListener("keydown", e=>{
+  if (["ArrowRight","PageDown"," ","Enter"].includes(e.key)){ e.preventDefault(); nextStep(); }
+  else if (["ArrowLeft","PageUp","Backspace"].includes(e.key)){ e.preventDefault(); prevStep(); }
+  else if (e.key === "Home") go(0);
+  else if (e.key === "End") go(slides.length-1);
+  else if (e.key.toLowerCase() === "n") document.getElementById("notes").classList.toggle("on");
+  else if (e.key.toLowerCase() === "f") document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+});
+deck.addEventListener("click", e=>{ if (!e.target.closest("video")) nextStep(); });
+let tx = null;
+addEventListener("touchstart", e=> tx = e.touches[0].clientX, {passive:true});
+addEventListener("touchend", e=>{ if (tx==null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) dx < 0 ? nextStep() : prevStep(); tx = null; });
+
+/* ═════════════ Coreografias específicas ═════════════ */
+const loops = {}; // tweens infinitos por slide, mortos ao sair
+function keep(id, tw){ (loops[id] ||= []).push(tw); return tw; }
+function killLoops(id){ (loops[id]||[]).forEach(t=>t.kill()); loops[id] = []; }
+
+const HOOKS = {
+  "s-intro": {
+    enter(s, t){
+      const logo = s.querySelector(".brand"), ap = s.querySelector(".apresenta");
+      const sp = ap._split || (ap._split = SplitText.create(ap, {type:"chars"}));
+      gsap.set(logo, {clipPath:"inset(0 100% 0 0)", scale:1.04, autoAlpha:1});
+      gsap.set(sp.chars, {autoAlpha:0});
+      t.to(logo, {clipPath:"inset(0 0% 0 0)", duration:1.3, ease:"power3.inOut"}, .5)
+       .to(logo, {scale:1, duration:2.2, ease:"power2.out"}, .5)
+       .fromTo(sp.chars, {autoAlpha:0, y:30, rotation:-8}, {autoAlpha:1, y:0, rotation:0, duration:.6, stagger:.06, ease:"back.out(2)"}, 1.7);
+    },
+  },
+  "s-capa": {
+    // tela do jogo → overlay escuro → logo fica colorido por cima → frase surge letra a letra
+    enter(s, t){
+      const bg = s.querySelector(".bg"), ov = s.querySelector(".overlay"), logo = s.querySelector(".logo");
+      const p = s.querySelector(".tag p"), sm = s.querySelector(".tag small");
+      const sp = p._split || (p._split = SplitText.create(p, {type:"words,chars"}));
+      gsap.set(ov, {autoAlpha:0}); gsap.set(bg, {filter:"blur(0px)"}); gsap.set(logo, {autoAlpha:0, y:0, scale:1}); gsap.set(sm, {autoAlpha:0});
+      gsap.set(p, {autoAlpha:1}); gsap.set(sp.chars, {autoAlpha:0});
+      keep(s.id, gsap.fromTo(bg, {scale:1.08}, {scale:1, duration:10, ease:"sine.out"}));
+      t.to(ov,   {autoAlpha:1, duration:1.5, ease:"power2.inOut"}, 1.8)
+       .to(bg,   {filter:"blur(10px)", duration:1.5, ease:"power2.inOut"}, 1.8)
+       .to(logo, {autoAlpha:1, duration:.5}, 1.8)
+       .to(logo, {y:-180, scale:.8, duration:1.2, ease:"power3.inOut"}, 3.3)
+       .fromTo(sp.chars, {autoAlpha:0, yPercent:90, scale:.3, rotation:()=>gsap.utils.random(-30,30)},
+         {autoAlpha:1, yPercent:0, scale:1, rotation:0, duration:.7, ease:"back.out(2.2)", stagger:.03}, 4)
+       .to(s.querySelectorAll(".tag .hl"), {scale:1.14, duration:.22, yoyo:true, repeat:1, ease:"power2.out", stagger:.25})
+       .fromTo(sm, {autoAlpha:0, y:20}, {autoAlpha:1, y:0, duration:.8, ease:"power2.out"})
+       .add(()=> keep(s.id, gsap.to(logo, {y:-190, duration:2.2, repeat:-1, yoyo:true, ease:"sine.inOut"})));
+    },
+    leave(s){ killLoops(s.id); },
+  },
+  "s-gancho": {
+    enter(s, t){
+      s.querySelectorAll(".person").forEach((p,i)=>{
+        t.add(()=> keep(s.id, gsap.to(p.querySelector(".sprite"), {y:-6, duration:1.1+i*.07, repeat:-1, yoyo:true, ease:"sine.inOut"})), .8);
+      });
+      s.querySelectorAll(".q,.tested").forEach(q=>gsap.set(q,{autoAlpha:0}));
+    },
+    step(s, n, t){
+      const people = [...s.querySelectorAll(".person")];
+      if (n === 1){ // lupa passa procurando
+        const lens = s.querySelector(".lens");
+        t.fromTo(lens, {x:0, autoAlpha:0}, {autoAlpha:.85, duration:.3}, .2)
+         .to(lens, {x:1400, duration:2.6, ease:"sine.inOut"}, .3)
+         .to(lens, {autoAlpha:0, duration:.3}, 2.7);
+        people.forEach((p,i)=> t.to(p, {scale:1.08, duration:.18, yoyo:true, repeat:1}, .3 + i*.42));
+      }
+      if (n === 2){
+        people.forEach((p,i)=> t.fromTo(p.querySelector(".q"), {y:20, scale:.3, autoAlpha:0}, {y:0, scale:1, autoAlpha:1, ease:"back.out(2.5)", duration:.5}, i*.08));
+        people.forEach((p,i)=> t.add(()=> keep(s.id, gsap.to(p.querySelector(".q"), {rotation:i%2?8:-8, duration:.8, repeat:-1, yoyo:true, ease:"sine.inOut"})), .8));
+      }
+    },
+    leave(s){ killLoops(s.id); },
+  },
+  "s-problema": {
+    enter(s, t){
+      s.querySelectorAll("[data-bar]").forEach((b,i)=>{
+        gsap.set(b, {width:0});
+        t.to(b, {width: b.dataset.w + "%", duration:1.4, ease:"power3.out"}, 1.1 + i*.25);
+        if (b.dataset.val){ const o = {v:0}; t.to(o, {v:+b.dataset.val, duration:1.4, ease:"power3.out", onUpdate:()=> b.textContent = fmtPct(o.v)}, 1.1 + i*.25); }
+      });
+    },
+  },
+  "s-virada": {
+    enter(s, t){
+      const img = s.querySelector(".mapwrap .zoom");
+      keep(s.id, gsap.fromTo(img, {scale:1.25, xPercent:-6, yPercent:-4}, {scale:1.05, xPercent:0, yPercent:0, duration:14, ease:"sine.inOut", repeat:-1, yoyo:true}));
+      s.querySelectorAll("[data-walk]").forEach((w,i)=>{
+        gsap.set(w, {x:0});
+        keep(s.id, gsap.to(w, {x:1160, duration:9 + i*2.2, ease:"none", repeat:-1, delay:.6 + i*1.7}));
+      });
+    },
+    leave(s){ killLoops(s.id); },
+  },
+  "s-loop": {
+    enter(s, t){
+      t.from(s.querySelector(".wheel circle"), {drawSVG:0, duration:1.4, ease:"power2.inOut"}, .3);
+      const orbit = s.querySelector(".orbit");
+      gsap.set(orbit, {rotation:0, autoAlpha:0});
+      // a bolinha percorre o raio 300 do círculo (wheel 860, centro 430)
+            t.to(orbit, {autoAlpha:1, duration:.4}, 2.2);
+      t.add(()=> keep(s.id, gsap.to(orbit, {rotation:360, duration:6, ease:"none", repeat:-1})), 2.2);
+      const discs = [...s.querySelectorAll(".node .disc")];
+      t.add(()=> keep(s.id, gsap.timeline({repeat:-1})
+        .to(discs, {scale:1.12, boxShadow:"8px 8px 0 #2a1c10", duration:.3, stagger:1.5, yoyo:true, repeat:1, ease:"power2.out"})), 2.2);
+    },
+    leave(s){ killLoops(s.id); },
+  },
+  "s-play": {
+    enter(s){ const v = s.querySelector("video"); v.currentTime = 0; v.play().catch(()=>{}); },
+    leave(s){ s.querySelector("video").pause(); },
+  },
+  "s-seg": {
+    enter(s, t){
+      t.add(()=> keep(s.id, gsap.fromTo(s.querySelectorAll(".ring"), {scale:.6, autoAlpha:.8}, {scale:1.5, autoAlpha:0, duration:2.4, stagger:.8, repeat:-1, ease:"power1.out"})), .8);
+    },
+    leave(s){ killLoops(s.id); },
+  },
+  "s-estamos": {
+    enter(s, t){ t.to(s.querySelector(".prog"), {width:"20%", duration:1.2, ease:"power2.out"}, 1.2);
+      t.add(()=> keep(s.id, gsap.to(s.querySelector(".here"), {y:-10, duration:.7, repeat:-1, yoyo:true, ease:"sine.inOut"})), 1.6); },
+    leave(s){ killLoops(s.id); },
+  },
+  "s-modelo": {
+    enter(s, t){
+      t.from(s.querySelector(".wire line"), {drawSVG:0, duration:1.2}, .8);
+      t.add(()=> keep(s.id, gsap.fromTo(s.querySelector(".pk"), {left:"0%"}, {left:"100%", duration:3, ease:"power1.inOut", repeat:-1})), 1.6);
+    },
+    leave(s){ killLoops(s.id); },
+  },
+  "s-pedido": {
+    enter(s, t){ t.from(s.querySelectorAll("#crowd2 .sprite"), {y:60, autoAlpha:0, stagger:.1, duration:.6, ease:"back.out(1.6)"}, .9); },
+  },
+};
+
+// Início
+document.fonts.ready.then(()=>{
+  // setas: copia o símbolo inline para que o DrawSVG consiga desenhá-las
+  document.querySelectorAll('use[href="#seta"]').forEach(u=>{ const svg = u.parentNode; svg.setAttribute("viewBox","0 0 100 40"); svg.innerHTML = document.getElementById("seta").innerHTML; });
+  // transforms de base (centralização/rotação) ficam com o GSAP, não com o CSS
+  document.querySelectorAll("[data-a]").forEach(el=>{
+    el._base = {
+      xPercent: +(el.dataset.xp ?? (el.matches(".node, .core, .centelha, .tnode, .mring") ? -50 : 0)),
+      yPercent: +(el.dataset.yp ?? (el.matches(".core") ? -50 : 0)),
+      rotation: +(el.dataset.rot ?? (el.matches(".stamp") ? -2 : 0)),
+    };
+    gsap.set(el, el._base);
+  });
+  slides.forEach(s => gsap.set(s, {visibility:"hidden"}));
+  const start = Math.min(Math.max(parseInt(location.hash.slice(1)) - 1 || 0, 0), slides.length - 1);
+  go(start, true);
+});
+</script>
+</body>
+</html>
